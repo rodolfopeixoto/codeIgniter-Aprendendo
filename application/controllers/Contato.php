@@ -24,9 +24,15 @@ class Contato extends CI_Controller{
       $data['formErrors'] = validation_errors();
 
     }else{
+      $formData = $this->input->post();
+      $emailStatus = $this->SendEmailToAdmin($formData['email'], $formData['nome'], 'to@domain.com','To Name', $formData['assunto'], $formData['mensagem'], $formData['email'], $formData['nome']);
 
-      $this->session->set_flashdata('success_msg','Contato recebido com sucesso!');
-      $data['formErrors'] = null;
+
+      if($emailStatus){
+        $this->session->set_flashdata('success_msg','Contato recebido com sucesso!');
+      }else{
+      $data['formErrors'] = 'Desculpe! Não foi possível enviar o seu contato. tente novamente mais tarde.';
+      }
     }
 
     $this->load->view('fale-conosco',$data);
@@ -36,6 +42,42 @@ class Contato extends CI_Controller{
     $data['title'] = "Rodolfo Peixoto - Trabalhe Conosco";
     $data['description'] = "Venha trabalhar na melhor empresa de TI do país.";
     $this->load->view('trabalhe-conosco',$data);
+  }
+
+
+  private function SendEmailToAdmin($from, $fromName, $to, $toName, $subject, $message, $reply = null, $replyName = null){
+    $this->load->library('email');
+
+    $config['charset'] = 'utf-8';
+    $config['wordwrap'] = TRUE;
+    $config['mailtype'] = 'html';
+    $config['protocol'] = 'smtp';
+    $config['smtp_host'] = 'smtp.umbler.com';
+    $config['smtp_user'] = 'contato@rodolfopeixoto.com.br';
+    $config['smtp_pass'] = 'rodolfopeixoto';
+    $config['smtp_port'] ='587';
+    $config['newline'] = '\r\n';
+
+    $this->email->initialize($config);
+
+    $this->email->from($from, $fromName);
+    $this->email->to($to, $toName);
+
+
+    if($reply)
+      $this->email->reply_to($reply, $replyName);
+
+    $this->email->subject($subject);
+    $this->email->message($message);
+
+    if($this->email->send())
+      return true;
+    else
+      return false;
+
+
+        echo $this->email->print_debugger();
+
   }
 }
 ?>
