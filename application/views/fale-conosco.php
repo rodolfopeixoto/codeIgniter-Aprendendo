@@ -4,29 +4,40 @@
  <h1>Fale Conosco</h1>
   <div class="row">
     <div class="col-md-8">
+      <?php if($formErrors){ ?>
+      	<div class="alert alert-danger">
+          <?= $formErrors ?>
+      	</div>
+      	<?php
+           }else{
+           	  if($this->session->flashdata('success_msg')){ ?>
+               <div class="alert alert-success">
+                <?= $this->session->flashdata('success_msg'); ?>
+               </div>
+        <?php } } ?>
     	<form class="form-horizontal" method="POST" action="">
     		<div class="form-group">
     			<label class="col-md-2 control-label" for="nome">Nome</label>
     			<div class="col-md-8">
-    				<input type="text" id="nome" name="nome" placeholder="Nome" class="form-control input-md" required="">
+    				<input type="text" id="nome" name="nome" placeholder="Nome" class="form-control input-md" required="" value="<?= set_value('nome');?>">
     			</div>
     		</div>
     		<div class="form-group">
     			<label class="col-md-2 control-label" for="email">Email</label>
     			<div class="col-md-8">
-    				<input type="email" id="email" name="email" placeholder="Email" class="form-control input-md" required="">
+    				<input type="email" id="email" name="email" placeholder="Email" class="form-control input-md" required=""  value="<?= set_value('email');?>">
     			</div>
     		</div>
     		<div class="form-group">
     			<label class="col-md-2 control-label" for="assunto">Assunto</label>
     			<div class="col-md-8">
-    				<input type="assunto" id="assunto" name="assunto" placeholder="Assunto" class="form-control input-md" required="">
+    				<input type="assunto" id="assunto" name="assunto" placeholder="Assunto" class="form-control input-md" required=""  value="<?= set_value('assunto');?>">
     			</div>
     		</div>
     		<div class="form-group">
     			<label class="col-md-2 control-label" for="mensagem">Mensagem</label>
     			<div class="col-md-8">
-    				<textarea id="mensagem" class="form-control" name="mensagem" placeholder="Mensagem" rows="10" required="">mensagem</textarea>
+    				<textarea id="mensagem" class="form-control" name="mensagem" placeholder="Mensagem" rows="10" required=""> <?= set_value('mensagem');?></textarea>
     			</div>
     		</div>
     		<div class="form-group">
