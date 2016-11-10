@@ -42,7 +42,7 @@
     		</div>
     		<div class="form-group">
     			<div class="col-md-10">
-    				<input type="submit" value="Enviar" class="btn btn-default pull-right">
+    				<input type="submit" value="Enviar" class="btn btn-primary pull-right">
     			</div>
     		</div>
     	</form>
